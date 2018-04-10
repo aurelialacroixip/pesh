@@ -1,24 +1,34 @@
 CXX=g++
 CFLAGS =  -c -Wall -Werror
-OBJECTS = main.o p_forward.o p_hack.o P_forward.o P_hack.o
+OBJECTS = build/main.o build/p_forward.o build/p_hack.o build/P_forward.o build/P_hack.o
 
+all: bin build bin/prog
 
+bin/prog: $(OBJECTS)
+	$(CXX) $(OBJECTS) -o bin/prog
 
-prog: $(OBJECTS)
-	$(CXX) $(OBJECTS) -o prog
+build/main.o: src/main.cpp src/functions.h
+	$(CXX) $(CFLAGS) src/main.cpp -o build/main.o
 
-main.o: main.cpp functions.h
-	$(CXX) $(CFLAGS) main.cpp
-p_forward.o: p_forward.cpp functions.h
-	$(CXX) $(CFLAGS) p_forward.cpp
-p_hack.o: p_hack.cpp functions.h
-	$(CXX) $(CFLAGS) p_hack.cpp
-P_forward.o: P_forward.cpp functions.h
-	$(CXX) $(CFLAGS) P_forward.cpp
-P_hack.o: P_hack.cpp functions.h
-	$(CXX) $(CFLAGS) P_hack.cpp
+build/p_forward.o: src/p_forward.cpp src/functions.h
+	$(CXX) $(CFLAGS) src/p_forward.cpp -o build/p_forward.o
+
+build/p_hack.o: src/p_hack.cpp src/functions.h
+	$(CXX) $(CFLAGS) src/p_hack.cpp -o build/p_hack.o
+
+build/P_forward.o: src/P_forward.cpp src/functions.h
+	$(CXX) $(CFLAGS) src/P_forward.cpp -o build/P_forward.o
+
+build/P_hack.o: src/P_hack.cpp src/functions.h
+	$(CXX) $(CFLAGS) src/P_hack.cpp -o build/P_hack.o
+
+build:
+	mkdir build
+bin:
+	mkdir bin
+
 clean:
-	-rm -rf *.o
+	-rm -rf bin build
 
 	
 
